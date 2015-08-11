@@ -1,0 +1,42 @@
+### API: https://pubs.vmware.com/vsphere-51/index.jsp#com.vmware.powercli.cmdletref.doc/Overview.html
+
+## Cache contest machines
+$CONTEST = get-vm -Location “Contest *”
+
+# Revert snapshots
+foreach( $vm in $CONTEST ) { Set-VM -VM $vm –Snapshot ContestStart }
+foreach( $vm in $CONTEST ) { start-vm $vm }
+
+# Create snapshots option 1
+get-vm -Location “Contest *” | New-Snapshot -Name ContestStart
+
+# Create snapshots option 2
+foreach( $vm in $CONTEST ) {New-Snapshot -VM $vm -Name ContestStart -Confirm:A} 
+
+## Create User Folders
+# https://technet.microsoft.com/en-us/library/Ee692803.aspx
+Get <Full Name> for <User> of group <IAS311>
+For each <Full Name>
+	Create folder in “IAS311 *” with [311] <Full Name>
+	Assign “STUDENTS” role to folder “[311] <Full Name> for <User>
+	New-Folder -Name <String> -Location “IAS311 *”
+	New-VIPermission -Entity <FolderName> -Principal e229\<username> -Role STUDENTS
+
+## Deploy Kali
+New-VM -Name <student -VM <Kali-template-0123> —Location <IAS311<student>> Datastore ISCSI-STORAGE-0 -DiskStorageFormat thin
+
+## Deploy VM’s
+student_clones=(student1 student2 student3)
+
+for i in ${student_clones[@]}; do
+        ./clone.sh basefolder ${i}
+
+## Register missing vm’s
+http://www.wooditwork.com/2011/08/11/adding-vmx-files-to-vcenter-inventory-with-powercli-gets-even-easier/
+$VMXFile = “[ISCSI-STORAGE-0] SERVER01/SERVER01.vmx"
+$VMXFile = “[ISCSI-STORAGE-1] SERVER01/SERVER01.vmx"
+$VMFolder = Get-Folder "Prod Servers"
+New-VM -VMFilePath $VMXFile -Location $$VMFolder
+
+
+	
