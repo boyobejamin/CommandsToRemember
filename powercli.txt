@@ -1,6 +1,6 @@
 ### API: https://pubs.vmware.com/vsphere-51/index.jsp#com.vmware.powercli.cmdletref.doc/Overview.html
 
-## Cache contest machines
+## Variablize contest machines
 $CONTEST = get-vm -Location “Contest *”
 
 # Revert snapshots
@@ -21,6 +21,10 @@ For each <Full Name>
 	Assign “STUDENTS” role to folder “[CLASS] <Full Name> for <User>
 	New-Folder -Name <String> -Location “CLASS *”
 	New-VIPermission -Entity <FolderName> -Principal e229\<username> -Role STUDENTS
+	New-VIPermission -Entity "IASBen" -Principal e229\bwelch -Role STUDENTS
+	New-Folder -Name "Student1" -Location “IASBen”
+	New-Folder -Name "Student2" -Location “IASBen”
+	New-Folder -Name "Student3" -Location “IASBen”
 
 ## Deploy Kali
 New-VM -Name <student -VM <Kali-template-0123> —Location <IAS311<student>> Datastore STOR-0 -DiskStorageFormat thin
@@ -36,10 +40,36 @@ http://www.wooditwork.com/2011/08/11/adding-vmx-files-to-vcenter-inventory-with-
 $VMXFile = “[STOR-0] SERVER01/SERVER01.vmx"
 $VMXFile = “[STOR-1] SERVER01/SERVER01.vmx"
 $VMFolder = Get-Folder "Prod Servers"
-New-VM -VMFilePath $VMXFile -Location $$VMFolder
+New-VM -VMFilePath $VMXFile -Location $VMFolder
 
 ## Destroy, Destroy, Destroy
+$DESVM = get-vm -Location “Class111 *”
+$DESFOL = get-folder -Location “Class111 *”
+foreach ($vm in $DESVM) {Remove-VM -DeletePermanently -VM $vm -Confirm:$false}
+foreach ($folder in $DESFOL) {Remove-Folder -Folder $folder -DeletePermanently}
+
+### Samples
+New-Folder -Name "BensClass" -Location “Classes”
+New-VIPermission -Entity Classes -Principal dc01\bensclass -Role "Read-only"
+
+## Should be dynamic
+## Static here is still faster than by GUI
+New-Folder -Name "Student1" -Location “IASBen”
+New-VIPermission -Entity "Student01" -Principal dc01\boyobejamin -Role STUDENTS
+New-Folder -Name "Student2" -Location “IASBen”
+New-VIPermission -Entity "Student02" -Principal dc01\boyobejamin -Role STUDENTS
+New-Folder -Name "Student3" -Location “IASBen”
+New-VIPermission -Entity "Student03" -Principal dc01\boyobejamin -Role STUDENTS
+
+## Insert deploy VM's here
+
+$DESVM = get-vm -Location “BenClass”
+$DESFOL = get-folder -Location “BenClass”
 Remove-VM -DeletePermanently -VM <Virtual Machine> -WhatIf
+Remove-Folder -Folder $folder -DeletePermanently  -WhatIf
+foreach ($vm in $DESVM) {Remove-VM -DeletePermanently -VM $vm -Confirm:$false}
+foreach ($folder in $DESFOL) {Remove-Folder -Folder $folder -DeletePermanently -Confirm:$false}
+
 
 
 	
