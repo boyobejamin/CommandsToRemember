@@ -2,21 +2,22 @@
 
 	rsync -avP root@192.168.254.253:/export/<vm> /export/<vm>
  
- # Cisco
-  show platform tcam utilization
-	show controllers utilization
-	show process cpu history
-	
-	# OS X
-	sudo discoveryutil mdnsflushcache
-	
-	# Python and Linux
-	sudo apt-get install python-pandas
-	sudo apt-get install screen open-vm-tools htop git
-	ssh-copy-id ubuntu@10.0.0.1
-	curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
-	
-	# Apache ssl.conf and ssl generation
-	SSLCipherSuite          ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-$
-	SSLHonorCipherOrder on
-	openssl req -x509 -nodes -days 720 -newkey rsa:2048 -keyout example.com.key -out example.com.crt
+# Cisco
+show platform tcam utilization
+spanning-tree bpduguard enable
+show controllers utilization
+show process cpu history
+
+# OS X
+sudo discoveryutil mdnsflushcache
+
+# Python and Linux
+sudo apt-get install python-pandas
+sudo apt-get install screen open-vm-tools htop git
+ssh-copy-id ubuntu@10.0.0.1
+curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
+
+# Apache ssl.conf and ssl generation
+SSLCipherSuite          ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-$
+SSLHonorCipherOrder on
+openssl req -x509 -nodes -days 720 -newkey rsa:2048 -keyout example.com.key -out example.com.crt
