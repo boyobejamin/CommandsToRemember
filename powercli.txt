@@ -70,6 +70,9 @@ Remove-Folder -Folder $folder -DeletePermanently  -WhatIf
 foreach ($vm in $DESVM) {Remove-VM -DeletePermanently -VM $vm -Confirm:$false}
 foreach ($folder in $DESFOL) {Remove-Folder -Folder $folder -DeletePermanently -Confirm:$false}
 
+## Restart all VMs that start with the name "Thing"
+get-vm -name Thing* | where-object  {$_.PowerState -eq "PoweredOn"} | restart-vmguest
+
 
 
 	
