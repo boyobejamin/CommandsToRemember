@@ -73,6 +73,11 @@ foreach ($folder in $DESFOL) {Remove-Folder -Folder $folder -DeletePermanently -
 ## Restart all VMs that start with the name "Thing"
 get-vm -name Thing* | where-object  {$_.PowerState -eq "PoweredOn"} | restart-vmguest
 
+# Migrate VMs to new Datastore
+$DS = Get-Datastore MyNewAwesomeDS
+$VMS = Get-Datastore OldDatastore | Get-VM
+foreach ($VM in $VMs) { Move-VM -ds $DS -vm $VM }
+
 
 
 	
